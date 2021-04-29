@@ -21,7 +21,7 @@ pipeline {
       steps {
         sshagent(['osm-9']) {
           script {
-              sh "ssh osm-9@13.71.24.134 osm k8scluster-add --creds kubespray-config.yaml --version '1.20.2' --vim devstack --description 'Kubespray Cluster' --k8s-nets '{"net1": "external"}' kubespray-cluster"
+              sh "ssh osm-9@13.71.24.134 osm k8scluster-add --creds kubespray-config.yaml --version '1.20.2' --vim devstack --description 'Kubespray Cluster'                             --k8s-nets '{"net1": "external"}' kubespray-cluster"
           }
         }              
       }
