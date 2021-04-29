@@ -12,7 +12,7 @@ pipeline {
 
     stage('Checkout Source Code') {
       steps {
-        git 'https://github.com/chetangautamm/helm-k8s-deployment.git'
+        git 'https://github.com/chetangautamm/test.git'
       }
     }
     
@@ -86,7 +86,7 @@ pipeline {
       steps {
         sshagent(['osm-9']) {
           script {
-             sh "ssh osm-9@13.71.24.134 osm ns-create --ns_name opensips --nsd_name cicd_opensips-7_ns --vim_account OpenstackR"
+             sh "ssh osm-9@13.71.24.134 osm ns-create --ns_name opensips-server --nsd_name cicd_opensips-7_ns --vim_account OpenstackR"
              sh "ssh osm-9@13.71.24.134 osm ns-create --ns_name sipp-uas --nsd_name cicd_opensips-7_ns --vim_account OpenstackR"
              sh "ssh osm-9@13.71.24.134 osm ns-create --ns_name sipp-uac --nsd_name cicd_opensips-7_ns --vim_account OpenstackR"
           }
