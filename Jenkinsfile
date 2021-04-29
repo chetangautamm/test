@@ -58,29 +58,48 @@ pipeline {
         }
       }
     }
+    stage('Creating nfpkg & nspkg in OSM for Opensips') {
+      steps {
+        sshagent(['osm-9']) {
+          sh "scp -o StrictHostKeyChecking=no -q opensips-nf.tar.gz osm-9@20.198.96.248:/home/osm-9"
+          sh "scp -o StrictHostKeyChecking=no -q opensips-ns.tar.gz osm-9@20.198.96.248:/home/osm-9"
+          script {
+             sh "ssh osm-9@20.198.96.248 osm nfpkg-create opensips-nf.tar.gz"
+             sh "ssh osm-9@20.198.96.248 osm nspkg-create opensips-ns.tar.gz"
+          }
+        }
+      }
+    }
+     stage('Creating nfpkg & nspkg in OSM for Sipp') {
+      steps {
+        sshagent(['osm-9']) {
+          sh "scp -o StrictHostKeyChecking=no -q sipp-nf.tar.gz osm-9@20.198.96.248:/home/osm-9"
+          sh "scp -o StrictHostKeyChecking=no -q sipp-ns.tar.gz osm-9@20.198.96.248:/home/osm-9"
+          script {
+             sh "ssh osm-9@20.198.96.248 osm nfpkg-create sipp-nf.tar.gz"
+             sh "ssh osm-9@20.198.96.248 osm nspkg-create sipp-ns.tar.gz"
+          }
+        }
+      }
+    }
     stage('Creating nsd in OSM') {
       steps {
         sshagent(['osm-9']) {
           script {
-             sh "ssh osm-9@20.198.96.248 osm ns-create --ns_name webcache --nsd_name squid-cnf-ns --vim_account OpenstackR"
+             sh "ssh osm-9@20.198.96.248 osm ns-create --ns_name opensips --nsd_name cicd_opensips-7_ns --vim_account OpenstackR"
+             sh "ssh osm-9@20.198.96.248 osm ns-create --ns_name sipp --nsd_name cicd_opensips-7_ns --vim_account OpenstackR"
           }
         }
       }
     }
-    stage('Creating nfpkg in OSM') {
+    stage('Validating Opensips Using SIPp') {
       steps {
-        sshagent(['osm-9']) {
+        sh "chmod +x configure-osm.sh"
+        sshagent(['k8suser']) {
+          sh "scp -o StrictHostKeyChecking=no -q configure-osm.sh k8suser@52.172.221.4:/home/k8suser"
           script {
-             sh "ssh osm-9@20.198.96.248 osm nfpkg-create openldap-20apr-local.tgz"
-          }
-        }
-      }
-    }
-    stage('Creating nspkg in OSM') {
-      steps {
-        sshagent(['osm-9']) {
-          script {
-             sh "ssh osm-9@20.198.96.248 osm nspkg-create openldap-20apr-local_ns.tgz"
+            sh "sleep 10"
+            sh "ssh k8suser@52.172.221.4 ./configure-osm.sh"
           }
         }
       }
