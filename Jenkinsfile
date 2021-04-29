@@ -31,7 +31,7 @@ pipeline {
       steps {
         sh "chmod +x osm-k8s-validate.sh"
         sshagent(['osm-9']) {
-          sh "scp -o StrictHostKeyChecking=no -q osm-k8s-validate.sh osm-9@13.71.24.134:/home/osm-9"
+          sh "scp -o StrictHostKeyChecking=no -q osm-k8s-validate.sh osm-9@13.71.24.134:/home/osm-9/"
           script {
               sh "ssh osm-9@13.71.24.134 ./osm-k8s-validate.sh"
           }
@@ -51,7 +51,7 @@ pipeline {
       steps {
         sh "chmod +x osm-helm-validate.sh"
         sshagent(['osm-9']) {
-          sh "scp -o StrictHostKeyChecking=no -q osm-helm-validate.sh osm-9@13.71.24.134:/home/osm-9"
+          sh "scp -o StrictHostKeyChecking=no -q osm-helm-validate.sh osm-9@13.71.24.134:/home/osm-9/"
           script {
               sh "ssh osm-9@13.71.24.134 ./osm-helm-validate.sh"
           }
@@ -61,8 +61,8 @@ pipeline {
     stage('Creating nfpkg & nspkg in OSM for Opensips') {
       steps {
         sshagent(['osm-9']) {
-          sh "scp -o StrictHostKeyChecking=no -q opensips-nf.tar.gz osm-9@13.71.24.134:/home/osm-9"
-          sh "scp -o StrictHostKeyChecking=no -q opensips-ns.tar.gz osm-9@13.71.24.134:/home/osm-9"
+          sh "scp -o StrictHostKeyChecking=no -q opensips-nf.tar.gz osm-9@13.71.24.134:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q opensips-ns.tar.gz osm-9@13.71.24.134:/home/osm-9/"
           script {
              sh "ssh osm-9@13.71.24.134 osm nfpkg-create opensips-nf.tar.gz"
              sh "ssh osm-9@13.71.24.134 osm nspkg-create opensips-ns.tar.gz"
@@ -73,8 +73,8 @@ pipeline {
      stage('Creating nfpkg & nspkg in OSM for Sipp') {
       steps {
         sshagent(['osm-9']) {
-          sh "scp -o StrictHostKeyChecking=no -q sipp-nf.tar.gz osm-9@13.71.24.134:/home/osm-9"
-          sh "scp -o StrictHostKeyChecking=no -q sipp-ns.tar.gz osm-9@13.71.24.134:/home/osm-9"
+          sh "scp -o StrictHostKeyChecking=no -q sipp-nf.tar.gz osm-9@13.71.24.134:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q sipp-ns.tar.gz osm-9@13.71.24.134:/home/osm-9/"
           script {
              sh "ssh osm-9@13.71.24.134 osm nfpkg-create sipp-nf.tar.gz"
              sh "ssh osm-9@13.71.24.134 osm nspkg-create sipp-ns.tar.gz"
