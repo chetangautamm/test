@@ -67,7 +67,7 @@ pipeline {
           sh "scp -o StrictHostKeyChecking=no -q opensips-nf.tar.gz osm-9@13.71.29.238:/home/osm-9/"
           sh "scp -o StrictHostKeyChecking=no -q opensips-ns.tar.gz osm-9@13.71.29.238:/home/osm-9/"
           script {
-             sh "ssh osm-9@13.71.29.238 osm nfpkg-create opensips-nf.tar.gz"
+             sh "ssh osm-9@13.71.29.238 ls"
              sh "ssh osm-9@13.71.29.238 osm nspkg-create opensips-ns.tar.gz"
           }
         }
