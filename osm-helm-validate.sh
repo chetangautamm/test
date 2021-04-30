@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ 'osm repo-list | grep helm-repo' ]
+if [ "helm-repo" == "osm repo-list | grep helm-repo" ]
 then
    echo "Helm Repository is Added Successfully"
 else

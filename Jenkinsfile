@@ -21,6 +21,7 @@ pipeline {
       steps {
         sh "chmod +x osm-k8s-add.sh"
         sshagent(['osm-9']) {
+          sh "scp -o StrictHostKeyChecking=no -q kubespray-config.yaml osm-9@13.71.29.238:/home/osm-9/"
           sh "scp -o StrictHostKeyChecking=no -q osm-k8s-add.sh osm-9@13.71.29.238:/home/osm-9/"
           script {
               sh "ssh osm-9@13.71.29.238 ./osm-k8s-add.sh"
