@@ -90,8 +90,7 @@ pipeline {
         sshagent(['osm-9']) {
           script {
              sh "ssh osm-9@13.71.29.238 osm ns-create --ns_name opensips-server --nsd_name cicd_opensips-7_ns --vim_account OpenstackR"
-             sh "ssh osm-9@13.71.29.238 osm ns-create --ns_name sipp-uas --nsd_name cicd_opensips-7_ns --vim_account OpenstackR"
-             sh "ssh osm-9@13.71.29.238 osm ns-create --ns_name sipp-uac --nsd_name cicd_opensips-7_ns --vim_account OpenstackR"
+             sh "ssh osm-9@13.71.29.238 osm ns-create --ns_name sipp-uas --nsd_name cicd_sippuas-7_ns --vim_account OpenstackR"
           }
         }
       }

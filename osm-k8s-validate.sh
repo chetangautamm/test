@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "kubespray-cluster" == "osm k8scluster-list | grep kubespray-cluster" ]
+if [ "osm k8scluster-list | grep kubespray-cluster" ]
 then
    echo "K8s Kubespray Cluster is Added Successfully"
 else
