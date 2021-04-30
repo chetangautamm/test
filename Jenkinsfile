@@ -68,7 +68,7 @@ pipeline {
           sh "scp -o StrictHostKeyChecking=no -q opensips-ns.tar.gz osm-9@13.71.29.238:/home/osm-9/"
           script {
              sh "ssh osm-9@13.71.29.238 ls"
-             sh "ssh osm-9@13.71.29.238 osm nspkg-create opensips-ns.tar.gz"
+             sh "ssh osm-9@13.71.29.238 pwd"
           }
         }
       }
@@ -89,7 +89,7 @@ pipeline {
       steps {
         sshagent(['osm-9']) {
           script {
-             sh "ssh osm-9@13.71.29.238 osm ns-create --ns_name server-opensips --nsd_name cicd_opensips-30_ns --vim_account OpenstackR"
+             sh "ssh osm-9@13.71.29.238 ls"
              sh "ssh osm-9@13.71.29.238 osm ns-create --ns_name uas-sipp --nsd_name cicd_sipp_uas-30_ns --vim_account OpenstackR"
           }
         }
