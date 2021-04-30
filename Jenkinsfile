@@ -75,11 +75,13 @@ pipeline {
     }
      stage('Creating nfpkg & nspkg in OSM for Sipp') {
       steps {
+        sh "chmod +x test-sipp.sh"
         sshagent(['osm-9']) {
           sh "scp -o StrictHostKeyChecking=no -q sipp-nf.tar.gz osm-9@13.71.29.238:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q test-sipp.sh osm-9@13.71.29.238:/home/osm-9/"
           sh "scp -o StrictHostKeyChecking=no -q sipp-ns.tar.gz osm-9@13.71.29.238:/home/osm-9/"
           script {
-             sh "ssh osm-9@13.71.29.238 osm nfpkg-create sipp-nf.tar.gz"
+             sh "ssh osm-9@13.71.29.238 ./test-sipp.sh"
              sh "ssh osm-9@13.71.29.238 osm nspkg-create sipp-ns.tar.gz"
           }
         }
