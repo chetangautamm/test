@@ -46,6 +46,7 @@ pipeline {
         sshagent(['osm-9']) {
           script {
              sh "ssh osm-9@13.71.29.238 osm repo-add helm-repo https://chetangautamm.github.io/osm-helm/"
+             sh "ssh osm-9@13.71.29.238 sleep 10"
           }
         }
       }
@@ -67,24 +68,26 @@ pipeline {
           sh "scp -o StrictHostKeyChecking=no -q opensips-nf.tar.gz osm-9@13.71.29.238:/home/osm-9/"
           sh "scp -o StrictHostKeyChecking=no -q opensips-ns.tar.gz osm-9@13.71.29.238:/home/osm-9/"
           script {
-             sh "ssh osm-9@13.71.29.238 ls"
-             sh "ssh osm-9@13.71.29.238 pwd"
+             sh "ssh osm-9@13.71.29.238 sleep 10"
+             sh "ssh osm-9@13.71.29.238 osm nfpkg-create opensips-nf.tar.gz"
+             sh "ssh osm-9@13.71.29.238 sleep 10"
+             sh "ssh osm-9@13.71.29.238 osm nspkg-create opensips-ns.tar.gz"
+             sh "ssh osm-9@13.71.29.238 sleep 10"
           }
         }
       }
     }
      stage('Creating nfpkg & nspkg in OSM for Sipp') {
       steps {
-        sh "chmod +x test-sipp.sh"
         sshagent(['osm-9']) {
           sh "scp -o StrictHostKeyChecking=no -q sipp-nf.tar.gz osm-9@13.71.29.238:/home/osm-9/"
-          sh "scp -o StrictHostKeyChecking=no -q test-sipp.sh osm-9@13.71.29.238:/home/osm-9/"
           sh "scp -o StrictHostKeyChecking=no -q sipp-ns.tar.gz osm-9@13.71.29.238:/home/osm-9/"
           script {
-             sleep "10"
+             sh "ssh osm-9@13.71.29.238 sleep 10"
              sh "ssh osm-9@13.71.29.238 osm nfpkg-create sipp-nf.tar.gz"
-             sleep "10"
+             sh "ssh osm-9@13.71.29.238 sleep 10"
              sh "ssh osm-9@13.71.29.238 osm nspkg-create sipp-ns.tar.gz"
+             sh "ssh osm-9@13.71.29.238 sleep 10"
           }
         }
       }
@@ -93,8 +96,11 @@ pipeline {
       steps {
         sshagent(['osm-9']) {
           script {
-             sh "ssh osm-9@13.71.29.238 ls"
+             sh "ssh osm-9@13.71.29.238 sleep 10"
+             sh "ssh osm-9@13.71.29.238 osm ns-create --ns_name server-opensips --nsd_name cicd_opensips-30_ns --vim_account OpenstackR"
+             sh "ssh osm-9@13.71.29.238 sleep 10"
              sh "ssh osm-9@13.71.29.238 osm ns-create --ns_name uas-sipp --nsd_name cicd_sipp_uas-30_ns --vim_account OpenstackR"
+             sh "ssh osm-9@13.71.29.238 sleep 10"
           }
         }
       }
