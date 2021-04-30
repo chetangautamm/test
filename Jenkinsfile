@@ -81,8 +81,10 @@ pipeline {
           sh "scp -o StrictHostKeyChecking=no -q test-sipp.sh osm-9@13.71.29.238:/home/osm-9/"
           sh "scp -o StrictHostKeyChecking=no -q sipp-ns.tar.gz osm-9@13.71.29.238:/home/osm-9/"
           script {
-             sh "ssh osm-9@13.71.29.238 ./test-sipp.sh"
-             sh "ssh osm-9@13.71.29.238 osm vnfd-list"
+             sleep "10"
+             sh "ssh osm-9@13.71.29.238 osm nfpkg-create sipp-nf.tar.gz"
+             sleep "10"
+             sh "ssh osm-9@13.71.29.238 osm nspkg-create sipp-ns.tar.gz"
           }
         }
       }
