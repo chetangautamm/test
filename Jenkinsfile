@@ -80,13 +80,13 @@ pipeline {
      stage('Creating nfpkg & nspkg in OSM for Sipp') {
       steps {
         sshagent(['osm-9']) {
-          sh "scp -o StrictHostKeyChecking=no -q sipp-knf.tar.gz osm-9@52.140.114.84:/home/osm-9/"
-          sh "scp -o StrictHostKeyChecking=no -q sipp-kns.tar.gz osm-9@52.140.114.84:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q uas-knf.tar.gz osm-9@52.140.114.84:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q uas-kns.tar.gz osm-9@52.140.114.84:/home/osm-9/"
           script {
              sh "ssh osm-9@52.140.114.84 sleep 10"
-             sh "ssh osm-9@52.140.114.84 osm nfpkg-create sipp-knf.tar.gz"
+             sh "ssh osm-9@52.140.114.84 osm nfpkg-create uas-knf.tar.gz"
              sh "ssh osm-9@52.140.114.84 sleep 10"
-             sh "ssh osm-9@52.140.114.84 osm nspkg-create sipp-kns.tar.gz"
+             sh "ssh osm-9@52.140.114.84 osm nspkg-create uas-kns.tar.gz"
              sh "ssh osm-9@52.140.114.84 sleep 10"
           }
         }
@@ -99,7 +99,7 @@ pipeline {
              sh "ssh osm-9@52.140.114.84 sleep 10"
              sh "ssh osm-9@52.140.114.84 osm ns-create --ns_name server-opensips --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR"
              sh "ssh osm-9@52.140.114.84 sleep 10"
-             sh "ssh osm-9@52.140.114.84 osm ns-create --ns_name uas-sipp --nsd_name jenkins_sipp-7_ns --vim_account OpenstackR"
+             sh "ssh osm-9@52.140.114.84 osm ns-create --ns_name uas --nsd_name jenkins_uas-7_ns --vim_account OpenstackR"
              sh "ssh osm-9@52.140.114.84 sleep 10"
           }
         }
