@@ -97,7 +97,7 @@ pipeline {
         sshagent(['osm-9']) {
           script {
              sh "ssh osm-9@20.197.26.159 sleep 10"
-             sh "ssh osm-9@20.197.26.159 osm ns-create --ns_name server-opensips --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR"
+             sh "ssh osm-9@20.197.26.159 osm ns-create --ns_name opensips --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR"
              sh "ssh osm-9@20.197.26.159 sleep 10"
              sh "ssh osm-9@20.197.26.159 osm ns-create --ns_name uas --nsd_name jenkins_uas-7_ns --vim_account OpenstackR"
              sh "ssh osm-9@20.197.26.159 sleep 10"
