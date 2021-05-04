@@ -77,7 +77,7 @@ pipeline {
         }
       }
     }
-     stage('Creating nfpkg & nspkg in OSM for Sipp') {
+     stage('Creating nfpkg & nspkg in OSM for UAS') {
       steps {
         sshagent(['osm-9']) {
           sh "scp -o StrictHostKeyChecking=no -q uas-knf.tar.gz osm-9@20.197.26.159:/home/osm-9/"
@@ -92,6 +92,21 @@ pipeline {
         }
       }
     }
+    stage('Creating nfpkg & nspkg in OSM for UAC') {
+      steps {
+        sshagent(['osm-9']) {
+          sh "scp -o StrictHostKeyChecking=no -q uac-knf.tar.gz osm-9@20.197.26.159:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q uac-kns.tar.gz osm-9@20.197.26.159:/home/osm-9/"
+          script {
+             sh "ssh osm-9@20.197.26.159 sleep 10"
+             sh "ssh osm-9@20.197.26.159 osm nfpkg-create uac-knf.tar.gz"
+             sh "ssh osm-9@20.197.26.159 sleep 10"
+             sh "ssh osm-9@20.197.26.159 osm nspkg-create uac-kns.tar.gz"
+             sh "ssh osm-9@20.197.26.159 sleep 10"
+          }
+        }
+      }
+    }
     stage('Creating nsd in OSM') {
       steps {
         sshagent(['osm-9']) {
@@ -100,6 +115,8 @@ pipeline {
              sh "ssh osm-9@20.197.26.159 osm ns-create --ns_name opensips --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR"
              sh "ssh osm-9@20.197.26.159 sleep 10"
              sh "ssh osm-9@20.197.26.159 osm ns-create --ns_name uas --nsd_name jenkins_uas-7_ns --vim_account OpenstackR"
+             sh "ssh osm-9@20.197.26.159 sleep 10"
+             sh "ssh osm-9@20.197.26.159 osm ns-create --ns_name uac --nsd_name jenkins_uac-7_ns --vim_account OpenstackR"
              sh "ssh osm-9@20.197.26.159 sleep 10"
           }
         }
