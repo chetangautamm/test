@@ -46,7 +46,7 @@ pipeline {
         sshagent(['osm-9']) {
           script {
              sh "ssh osm-9@52.172.185.225 osm repo-add helm-osm https://chetangautamm.github.io/osm-helm/"
-             sh "helm repo update"
+             sh "ssh osm-9@52.172.185.225 helm repo update"
              sh "ssh osm-9@52.172.185.225 sleep 10"
           }
         }
