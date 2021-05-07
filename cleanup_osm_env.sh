@@ -1,0 +1,127 @@
+#/bin/bash
+
+#Deleting NS instances
+var1=$(osm ns-list | grep opensips | awk '{print $2}');
+var2="opensips"
+if [ "$var1" = "$var2" ]
+then
+   echo "Opensips NS Instance is present.Remove It!!"
+   osm ns-delete opensips --force
+else
+   echo "Opensips NS Instance is not present!!"
+fi
+
+var3=$(osm ns-list | grep uas | awk '{print $2}');
+var4="uas"
+if [ "$var3" = "$var4" ]
+then
+   echo "UAS NS Instance is present.Remove It!!"
+   osm ns-delete uas --force
+else
+   echo "UAS NS Instance is not present!!"
+fi
+ 
+var5=$(osm ns-list | grep uac | awk '{print $2}');
+var6="uac"
+if [ "$var5" = "$var6" ]
+then
+   echo "UAC NS Instance is present.Remove It!!"
+   osm ns-delete uac --force
+else
+   echo "UAC NS Instance is not present!!"
+fi
+
+
+#Deleting Kubernetes Cluster
+var7=$(osm k8scluster-list | grep kubespray-cluster | awk '{print $2}');
+var8="kubespray-cluster"
+if [ "$var7" = "$var8" ]
+then
+   echo "Kubernetes Cluster is present.Remove It!!"
+   osm k8scluster-delete kubespray-cluster
+else
+   echo "Kubernetes Cluster is not present!!"
+fi
+
+
+#Deleting Helm Repository
+var9=$(osm repo-list | grep helm-osm | awk '{print $2}');
+var10="helm-osm"
+if [ "$var9" = "$var10" ]
+then
+   echo "Helm Repository is present.Remove It!!"
+   osm repo-delete helm-osm
+else
+   echo "Helm Repository is not present!!"
+fi
+
+#Deleting VNFD of Jenkins
+var11=$(osm vnfd-list | grep jenkins_opensips-7_knf | awk '{print $2}');
+var12="jenkins_opensips-7_knf"
+if [ "$var11" = "$var12" ]
+then
+   echo "Opensips VNFD is present.Remove It!!"
+   osm vnfd-delete jenkins_opensips-7_knf
+else
+   echo "Opensips VNFD is not present!!"
+fi
+
+var13=$(osm vnfd-list | grep jenkins_uas-7_knf | awk '{print $2}');
+var14="jenkins_uas-7_knf"
+if [ "$var13" = "$var14" ]
+then
+   echo "UAS VNFD is present.Remove It!!"
+   osm vnfd-delete jenkins_uas-7_knf
+else
+   echo "UAS VNFD is not present!!"
+fi
+
+var15=$(osm vnfd-list | grep jenkins_uac-7_knf | awk '{print $2}');
+var16="jenkins_uac-7_knf"
+if [ "$var15" = "$var16" ]
+then
+   echo "UAC VNFD is present.Remove It!!"
+   osm vnfd-delete jenkins_uac-7_knf
+else
+   echo "UAC VNFD is not present!!"
+fi
+
+#Deleting NSD of Jenkins
+var17=$(osm nsd-list | grep jenkins_opensips-7_ns | awk '{print $2}');
+var18="jenkins_opensips-7_ns"
+if [ "$var17" = "$var18" ]
+then
+   echo "Opensips NSD is present.Remove It!!"
+   osm nsd-delete jenkins_opensips-7_ns
+else
+   echo "Opensips NSD is not present!!"
+fi
+
+var19=$(osm nsd-list | grep jenkins_uas-7_ns | awk '{print $2}');
+var20="jenkins_uas-7_ns"
+if [ "$var19" = "$var20" ]
+then
+   echo "UAS NSD is present.Remove It!!"
+   osm nsd-delete jenkins_uas-7_ns
+else
+   echo "UAS NSD is not present!!"
+fi
+
+var21=$(osm nsd-list | grep jenkins_uac-7_ns | awk '{print $2}');
+var22="jenkins_uac-7_ns"
+if [ "$var21" = "$var22" ]
+then
+   echo "UAC NSD is present.Remove It!!"
+   osm nsd-delete jenkins_uac-7_ns
+else
+   echo "UAC NSD is not present!!"
+fi
+
+#Verifying Deletion of services
+osm k8scluster-list
+osm repo-list
+osm nsd-list
+osm vnfd-list
+ls
+
+ 

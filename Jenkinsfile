@@ -15,7 +15,19 @@ pipeline {
         git 'https://github.com/chetangautamm/test.git'
       }
     }
-   
+    stage('Cleanup OSM Environment') {
+      steps {
+        sh "chmod +x cleanup_osn_env.sh"
+        sshagent(['osm-9']) {
+          sh "scp -o StrictHostKeyChecking=no -q cleanup_osn_env.sh osm-9@20.198.0.28:/home/osm-9/"
+          script {
+              sh "ssh osm-9@20.198.0.28 ./cleanup_osn_env.sh"
+              sh "ssh osm-9@20.198.0.28 sleep 10"
+          }
+        }
+      }
+    }
+
     stage('Adding Kubespray Cluster to OSM') {
       steps {
         sh "chmod +x osm-k8s-add.sh"
@@ -108,6 +120,19 @@ pipeline {
         }
       }
     }
+     stage('Cleanup Kubernetes') {
+      steps {
+        sh "chmod +x k8s-cleanup.sh"
+        sshagent(['k8suser']) {
+          sh "scp -o StrictHostKeyChecking=no -q k8s-cleanup.sh k8suser@52.172.221.4:/home/k8suser"
+          script {
+            sh "ssh k8suser@52.172.221.4 ./k8s-cleanup.sh"
+            sh "ssh k8suser@52.172.221.4 sleep 30"
+          }
+        }
+      }
+    }
+
     stage('Creating nsd in OSM') {
       steps {
         sshagent(['osm-9']) {
@@ -123,7 +148,7 @@ pipeline {
         }
       }
     }
-    stage('Testing Opesnips Server by SIPp') {
+    stage('Testing Opensips Server by SIPp') {
       steps {
         sh "chmod +x configure-osm.sh"
         sshagent(['k8suser']) {
