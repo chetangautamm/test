@@ -1,8 +1,11 @@
 #!/bin/bash
 
-if [ "osm k8scluster-list | grep kubespray-cluster" ]
+var1=$(osm k8scluster-list | grep kubespray-cluster | awk '{print $2}');
+var2="kubespray-cluster"
+if [ "$var1" = "$var2" ]
 then
-   echo "K8s Kubespray Cluster is Added Successfully"
+   echo "Kubernetes Cluster is Added Successfully!!"
+   osm k8scluster-list
 else
-   echo "K8s Kubespray Cluster is not Added Successfully"
+   echo "Kubernetes Cluster is not Added!!"
 fi
