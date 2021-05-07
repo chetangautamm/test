@@ -17,11 +17,11 @@ pipeline {
     }
     stage('Cleanup OSM Environment') {
       steps {
-        sh "chmod +x cleanup_osn_env.sh"
+        sh "chmod +x cleanup_osm_env.sh"
         sshagent(['osm-9']) {
-          sh "scp -o StrictHostKeyChecking=no -q cleanup_osn_env.sh osm-9@20.198.0.28:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q cleanup_osm_env.sh osm-9@20.198.0.28:/home/osm-9/"
           script {
-              sh "ssh osm-9@20.198.0.28 ./cleanup_osn_env.sh"
+              sh "ssh osm-9@20.198.0.28 ./cleanup_osm_env.sh"
               sh "ssh osm-9@20.198.0.28 sleep 10"
           }
         }
