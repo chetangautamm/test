@@ -19,10 +19,10 @@ pipeline {
       steps {
         sh "chmod +x cleanup_osm_env.sh"
         sshagent(['osm-9']) {
-          sh "scp -o StrictHostKeyChecking=no -q cleanup_osm_env.sh osm-9@52.172.232.69:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q cleanup_osm_env.sh osm-9@20.198.125.39:/home/osm-9/"
           script {
-              sh "ssh osm-9@52.172.232.69 ./cleanup_osm_env.sh"
-              sh "ssh osm-9@52.172.232.69 sleep 10"
+              sh "ssh osm-9@20.198.125.39 ./cleanup_osm_env.sh"
+              sh "ssh osm-9@20.198.125.39 sleep 10"
           }
         }
       }
@@ -32,10 +32,10 @@ pipeline {
       steps {
         sh "chmod +x osm-k8s-add.sh"
         sshagent(['osm-9']) {
-          sh "scp -o StrictHostKeyChecking=no -q kubespray-config.yaml osm-9@52.172.232.69:/home/osm-9/"
-          sh "scp -o StrictHostKeyChecking=no -q osm-k8s-add.sh osm-9@52.172.232.69:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q kubespray-config.yaml osm-9@20.198.125.39:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q osm-k8s-add.sh osm-9@20.198.125.39:/home/osm-9/"
           script {
-              sh "ssh osm-9@52.172.232.69 ./osm-k8s-add.sh"
+              sh "ssh osm-9@20.198.125.39 ./osm-k8s-add.sh"
           }
         }              
       }
@@ -45,9 +45,9 @@ pipeline {
       steps {
         sh "chmod +x osm-k8s-validate.sh"
         sshagent(['osm-9']) {
-          sh "scp -o StrictHostKeyChecking=no -q osm-k8s-validate.sh osm-9@52.172.232.69:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q osm-k8s-validate.sh osm-9@20.198.125.39:/home/osm-9/"
           script {
-              sh "ssh osm-9@52.172.232.69 ./osm-k8s-validate.sh"
+              sh "ssh osm-9@20.198.125.39 ./osm-k8s-validate.sh"
           }
         }
       }
@@ -56,10 +56,10 @@ pipeline {
       steps {
         sshagent(['osm-9']) {
           script {
-             sh "ssh osm-9@52.172.232.69 osm repo-add --type helm-chart  helm-osm https://chetangautamm.github.io/osm-helm/"
-             sh "ssh osm-9@52.172.232.69 sleep 10"
-             sh "ssh osm-9@52.172.232.69 helm repo update"
-             sh "ssh osm-9@52.172.232.69 sleep 10"
+             sh "ssh osm-9@20.198.125.39 osm repo-add --type helm-chart  helm-osm https://chetangautamm.github.io/osm-helm/"
+             sh "ssh osm-9@20.198.125.39 sleep 10"
+             sh "ssh osm-9@20.198.125.39 helm repo update"
+             sh "ssh osm-9@20.198.125.39 sleep 10"
           }
         }
       }
@@ -68,9 +68,9 @@ pipeline {
       steps {
         sh "chmod +x osm-helm-validate.sh"
         sshagent(['osm-9']) {
-          sh "scp -o StrictHostKeyChecking=no -q osm-helm-validate.sh osm-9@52.172.232.69:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q osm-helm-validate.sh osm-9@20.198.125.39:/home/osm-9/"
           script {
-              sh "ssh osm-9@52.172.232.69 ./osm-helm-validate.sh"
+              sh "ssh osm-9@20.198.125.39 ./osm-helm-validate.sh"
           }
         }
       }
@@ -78,14 +78,14 @@ pipeline {
     stage('Creating nfpkg & nspkg in OSM for Opensips') {
       steps {
         sshagent(['osm-9']) {
-          sh "scp -o StrictHostKeyChecking=no -q opensips-knf.tar.gz osm-9@52.172.232.69:/home/osm-9/"
-          sh "scp -o StrictHostKeyChecking=no -q opensips-kns.tar.gz osm-9@52.172.232.69:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q opensips-knf.tar.gz osm-9@20.198.125.39:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q opensips-kns.tar.gz osm-9@20.198.125.39:/home/osm-9/"
           script {
-             sh "ssh osm-9@52.172.232.69 sleep 10"
-             sh "ssh osm-9@52.172.232.69 osm nfpkg-create opensips-knf.tar.gz"
-             sh "ssh osm-9@52.172.232.69 sleep 10"
-             sh "ssh osm-9@52.172.232.69 osm nspkg-create opensips-kns.tar.gz"
-             sh "ssh osm-9@52.172.232.69 sleep 10"
+             sh "ssh osm-9@20.198.125.39 sleep 10"
+             sh "ssh osm-9@20.198.125.39 osm nfpkg-create opensips-knf.tar.gz"
+             sh "ssh osm-9@20.198.125.39 sleep 10"
+             sh "ssh osm-9@20.198.125.39 osm nspkg-create opensips-kns.tar.gz"
+             sh "ssh osm-9@20.198.125.39 sleep 10"
           }
         }
       }
@@ -93,14 +93,14 @@ pipeline {
      stage('Creating nfpkg & nspkg in OSM for UAS') {
       steps {
         sshagent(['osm-9']) {
-          sh "scp -o StrictHostKeyChecking=no -q uas-knf.tar.gz osm-9@52.172.232.69:/home/osm-9/"
-          sh "scp -o StrictHostKeyChecking=no -q uas-kns.tar.gz osm-9@52.172.232.69:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q uas-knf.tar.gz osm-9@20.198.125.39:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q uas-kns.tar.gz osm-9@20.198.125.39:/home/osm-9/"
           script {
-             sh "ssh osm-9@52.172.232.69 sleep 10"
-             sh "ssh osm-9@52.172.232.69 osm nfpkg-create uas-knf.tar.gz"
-             sh "ssh osm-9@52.172.232.69 sleep 10"
-             sh "ssh osm-9@52.172.232.69 osm nspkg-create uas-kns.tar.gz"
-             sh "ssh osm-9@52.172.232.69 sleep 10"
+             sh "ssh osm-9@20.198.125.39 sleep 10"
+             sh "ssh osm-9@20.198.125.39 osm nfpkg-create uas-knf.tar.gz"
+             sh "ssh osm-9@20.198.125.39 sleep 10"
+             sh "ssh osm-9@20.198.125.39 osm nspkg-create uas-kns.tar.gz"
+             sh "ssh osm-9@20.198.125.39 sleep 10"
           }
         }
       }
@@ -108,14 +108,14 @@ pipeline {
     stage('Creating nfpkg & nspkg in OSM for UAC') {
       steps {
         sshagent(['osm-9']) {
-          sh "scp -o StrictHostKeyChecking=no -q uac-knf.tar.gz osm-9@52.172.232.69:/home/osm-9/"
-          sh "scp -o StrictHostKeyChecking=no -q uac-kns.tar.gz osm-9@52.172.232.69:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q uac-knf.tar.gz osm-9@20.198.125.39:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q uac-kns.tar.gz osm-9@20.198.125.39:/home/osm-9/"
           script {
-             sh "ssh osm-9@52.172.232.69 sleep 10"
-             sh "ssh osm-9@52.172.232.69 osm nfpkg-create uac-knf.tar.gz"
-             sh "ssh osm-9@52.172.232.69 sleep 10"
-             sh "ssh osm-9@52.172.232.69 osm nspkg-create uac-kns.tar.gz"
-             sh "ssh osm-9@52.172.232.69 sleep 10"
+             sh "ssh osm-9@20.198.125.39 sleep 10"
+             sh "ssh osm-9@20.198.125.39 osm nfpkg-create uac-knf.tar.gz"
+             sh "ssh osm-9@20.198.125.39 sleep 10"
+             sh "ssh osm-9@20.198.125.39 osm nspkg-create uac-kns.tar.gz"
+             sh "ssh osm-9@20.198.125.39 sleep 10"
           }
         }
       }
@@ -137,13 +137,13 @@ pipeline {
       steps {
         sshagent(['osm-9']) {
           script {
-             sh "ssh osm-9@52.172.232.69 sleep 10"
-             sh "ssh osm-9@52.172.232.69 osm ns-create --ns_name opensips --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR"
-             sh "ssh osm-9@52.172.232.69 sleep 10"
-             sh "ssh osm-9@52.172.232.69 osm ns-create --ns_name uas --nsd_name jenkins_uas-7_ns --vim_account OpenstackR"
-             sh "ssh osm-9@52.172.232.69 sleep 10"
-             sh "ssh osm-9@52.172.232.69 osm ns-create --ns_name uac --nsd_name jenkins_uac-7_ns --vim_account OpenstackR"
-             sh "ssh osm-9@52.172.232.69 sleep 10"
+             sh "ssh osm-9@20.198.125.39 sleep 10"
+             sh "ssh osm-9@20.198.125.39 osm ns-create --ns_name opensips --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR"
+             sh "ssh osm-9@20.198.125.39 sleep 10"
+             sh "ssh osm-9@20.198.125.39 osm ns-create --ns_name uas --nsd_name jenkins_uas-7_ns --vim_account OpenstackR"
+             sh "ssh osm-9@20.198.125.39 sleep 10"
+             sh "ssh osm-9@20.198.125.39 osm ns-create --ns_name uac --nsd_name jenkins_uac-7_ns --vim_account OpenstackR"
+             sh "ssh osm-9@20.198.125.39 sleep 10"
           }
         }
       }
