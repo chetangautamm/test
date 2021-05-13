@@ -32,6 +32,39 @@ else
 fi
 
 
+
+var25=$(osm ns-list | grep  -P '(^|\s)\Kopensips-prod(?=\s|$)' | awk '{print $2}');
+var26="opensips-prod"
+if [ "$var25" = "$var26" ]
+then
+   echo "Opensips NS Instance is present.Remove It!!"
+   osm ns-delete opensips-prod --force
+else
+   echo "Opensips NS Instance is not present!!"
+fi
+
+var27=$(osm ns-list | grep -P '(^|\s)\Kuas-prod(?=\s|$)' | awk '{print $2}');
+var28="uas-prod"
+if [ "$var27" = "$var28" ]
+then
+   echo "UAS NS Instance is present.Remove It!!"
+   osm ns-delete uas-prod --force
+else
+   echo "UAS NS Instance is not present!!"
+fi
+
+var29=$(osm ns-list | grep -P '(^|\s)\Kuac-prod(?=\s|$)' | awk '{print $2}');
+var30="uac-prod"
+if [ "$var29" = "$var30" ]
+then
+   echo "UAC NS Instance is present.Remove It!!"
+   osm ns-delete uac-prod --force
+else
+   echo "UAC NS Instance is not present!!"
+fi
+
+
+
 #Deleting Kubernetes Cluster
 var7=$(osm k8scluster-list | grep -P '(^|\s)\Kkubespray-cluster(?=\s|$)' | awk '{print $2}');
 var8="kubespray-cluster"
@@ -48,7 +81,7 @@ var24="kubeadm-cluster"
 if [ "$var23" = "$var24" ]
 then
    echo "Kubeadm Cluster is present.Remove It!!"
-   osm k8scluster-delete kubespray-cluster
+   osm k8scluster-delete kubeadm-cluster
 else
    echo "Kubeadm Cluster is not present!!"
 fi
@@ -64,6 +97,9 @@ then
 else
    echo "Helm Repository is not present!!"
 fi
+
+
+sleep 20
 
 #Deleting VNFD of Jenkins
 var11=$(osm vnfd-list | grep -P '(^|\s)\Kjenkins_opensips-7_knf(?=\s|$)' | awk '{print $2}');
