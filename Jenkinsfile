@@ -40,6 +40,20 @@ pipeline {
         }              
       }
     }
+
+    stage('Validating Kubespray Cluster Addition') {
+      steps {
+        sh "chmod +x osm-k8s-validate.sh"        
+        sshagent(['Osm9-12m']) {
+          sh "scp -o StrictHostKeyChecking=no -q osm-k8s-validate.sh Osm9-12m@20.198.121.127:/home/Osm9-12m/"
+          script {
+              sh "ssh Osm9-12m@20.198.121.127 ./osm-k8s-validate.sh"
+              sh "ssh Osm9-12m@20.198.121.127 sleep 5"
+          }
+        }
+      }
+    }
+
    
     stage('Adding Kubeadm Cluster to OSM') {
       steps {
@@ -55,15 +69,12 @@ pipeline {
     }
 
 
-    stage('Validating Cluster Addition') {
+    stage('Validating Kubeadm Cluster Addition') {
       steps {
-        sh "chmod +x osm-k8s-validate.sh"
         sh "chmod +x kubeadm-validate.sh"
         sshagent(['Osm9-12m']) {
-          sh "scp -o StrictHostKeyChecking=no -q osm-k8s-validate.sh Osm9-12m@20.198.121.127:/home/Osm9-12m/"
           sh "scp -o StrictHostKeyChecking=no -q kubeadm-validate.sh Osm9-12m@20.198.121.127:/home/Osm9-12m/"
           script {
-              sh "ssh Osm9-12m@20.198.121.127 ./osm-k8s-validate.sh"
               sh "ssh Osm9-12m@20.198.121.127 ./kubeadm-validate.sh"
               sh "ssh Osm9-12m@20.198.121.127 sleep 5"
           }
