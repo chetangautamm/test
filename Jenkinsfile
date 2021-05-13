@@ -61,15 +61,11 @@ pipeline {
         sh "chmod +x kubeadm-validate.sh"
         sshagent(['Osm9-12m']) {
           sh "scp -o StrictHostKeyChecking=no -q osm-k8s-validate.sh Osm9-12m@20.198.121.127:/home/Osm9-12m/"
+          sh "scp -o StrictHostKeyChecking=no -q kubeadm-validate.sh Osm9-12m@20.198.121.127:/home/Osm9-12m/"
           script {
               sh "ssh Osm9-12m@20.198.121.127 ./osm-k8s-validate.sh"
+              sh "ssh Osm9-12m@20.198.121.127 ./kubeadm-validate.sh"
               sh "ssh Osm9-12m@20.198.121.127 sleep 5"
-          }
-        }
-        sshagent(['kubeadm']) {
-          sh "scp -o StrictHostKeyChecking=no -q kubeadm-validate.sh kubeadm@20.193.238.113:/home/kubeadm/"
-          script {
-              sh "ssh kubeadm@20.193.238.113 ./kubeadm-validate.sh"
           }
         }
       }

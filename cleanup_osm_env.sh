@@ -98,39 +98,7 @@ else
    echo "Helm Repository is not present!!"
 fi
 
-
-sleep 20
-
-#Deleting VNFD of Jenkins
-var11=$(osm vnfd-list | grep -P '(^|\s)\Kjenkins_opensips-7_knf(?=\s|$)' | awk '{print $2}');
-var12="jenkins_opensips-7_knf"
-if [ "$var11" = "$var12" ]
-then
-   echo "Opensips VNFD is present.Remove It!!"
-   osm vnfd-delete jenkins_opensips-7_knf
-else
-   echo "Opensips VNFD is not present!!"
-fi
-
-var13=$(osm vnfd-list | grep -P '(^|\s)\Kjenkins_uas-7_knf(?=\s|$)' | awk '{print $2}');
-var14="jenkins_uas-7_knf"
-if [ "$var13" = "$var14" ]
-then
-   echo "UAS VNFD is present.Remove It!!"
-   osm vnfd-delete jenkins_uas-7_knf
-else
-   echo "UAS VNFD is not present!!"
-fi
-
-var15=$(osm vnfd-list | grep -P '(^|\s)\Kjenkins_uac-7_knf(?=\s|$)' | awk '{print $2}');
-var16="jenkins_uac-7_knf"
-if [ "$var15" = "$var16" ]
-then
-   echo "UAC VNFD is present.Remove It!!"
-   osm vnfd-delete jenkins_uac-7_knf
-else
-   echo "UAC VNFD is not present!!"
-fi
+sleep 5
 
 #Deleting NSD of Jenkins
 var17=$(osm nsd-list | grep -P '(^|\s)\Kjenkins_opensips-7_ns(?=\s|$)' | awk '{print $2}');
@@ -161,6 +129,38 @@ then
    osm nsd-delete jenkins_uac-7_ns
 else
    echo "UAC NSD is not present!!"
+fi
+
+sleep 5
+#Deleting VNFD of Jenkins
+var11=$(osm vnfd-list | grep -P '(^|\s)\Kjenkins_opensips-7_knf(?=\s|$)' | awk '{print $2}');
+var12="jenkins_opensips-7_knf"
+if [ "$var11" = "$var12" ]
+then
+   echo "Opensips VNFD is present.Remove It!!"
+   osm vnfd-delete jenkins_opensips-7_knf
+else
+   echo "Opensips VNFD is not present!!"
+fi
+
+var13=$(osm vnfd-list | grep -P '(^|\s)\Kjenkins_uas-7_knf(?=\s|$)' | awk '{print $2}');
+var14="jenkins_uas-7_knf"
+if [ "$var13" = "$var14" ]
+then
+   echo "UAS VNFD is present.Remove It!!"
+   osm vnfd-delete jenkins_uas-7_knf
+else
+   echo "UAS VNFD is not present!!"
+fi
+
+var15=$(osm vnfd-list | grep -P '(^|\s)\Kjenkins_uac-7_knf(?=\s|$)' | awk '{print $2}');
+var16="jenkins_uac-7_knf"
+if [ "$var15" = "$var16" ]
+then
+   echo "UAC VNFD is present.Remove It!!"
+   osm vnfd-delete jenkins_uac-7_knf
+else
+   echo "UAC VNFD is not present!!"
 fi
 
 #Verifying Deletion of services
