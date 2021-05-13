@@ -45,8 +45,8 @@ pipeline {
       steps {
         sh "chmod +x kubeadm-add.sh"
         sshagent(['kubeadm']) {
-          sh "scp -o StrictHostKeyChecking=no -q kubeadm-config.yaml kubeadm@20.193.238.113:/home/Osm9-12m/"
-          sh "scp -o StrictHostKeyChecking=no -q kubeadm-add.sh kubeadm@20.193.238.113:/home/Osm9-12m/"
+          sh "scp -o StrictHostKeyChecking=no -q kubeadm-config.yaml kubeadm@20.193.238.113:/home/kubeadm/"
+          sh "scp -o StrictHostKeyChecking=no -q kubeadm-add.sh kubeadm@20.193.238.113:/home/kubeadm/"
           script {
               sh "ssh Osm9-12m@20.198.121.127 ./kubeadm-add.sh"
           }
@@ -67,7 +67,7 @@ pipeline {
           }
         }
         sshagent(['kubeadm']) {
-          sh "scp -o StrictHostKeyChecking=no -q kubeadm-validate.sh kubeadm@20.193.238.113:/home/Osm9-12m/"
+          sh "scp -o StrictHostKeyChecking=no -q kubeadm-validate.sh kubeadm@20.193.238.113:/home/kubeadm/"
           script {
               sh "ssh kubeadm@20.193.238.113 ./kubeadm-validate.sh"
           }
@@ -161,7 +161,7 @@ pipeline {
       steps {
         sh "chmod +x kubeadm-cleanup.sh"
         sshagent(['kubeadm']) {
-          sh "scp -o StrictHostKeyChecking=no -q kubeadm-cleanup.sh kubeadm@20.193.238.113:/home/k8suser"
+          sh "scp -o StrictHostKeyChecking=no -q kubeadm-cleanup.sh kubeadm@20.193.238.113:/home/kubeadm"
           script {
             sh "ssh kubeadm@20.193.238.113 ./kubeadm-cleanup.sh"
             sh "ssh kubeadm@20.193.238.113 sleep 30"
@@ -218,7 +218,7 @@ pipeline {
       steps {
         sh "chmod +x configure-osm.sh"
         sshagent(['kubeadm']) {
-          sh "scp -o StrictHostKeyChecking=no -q configure-osm.sh kubeadm@20.193.238.113:/home/k8suser"
+          sh "scp -o StrictHostKeyChecking=no -q configure-osm.sh kubeadm@20.193.238.113:/home/kubeadm"
           script {
             sh "ssh kubeadm@20.193.238.113 sleep 120"
             sh "ssh kubeadm@20.193.238.113 ./configure-osm.sh"
