@@ -213,6 +213,7 @@ pipeline {
              sh "ssh Osm9-12m@20.198.121.127 sleep 10"
              sh "ssh Osm9-12m@20.198.121.127 osm ns-create --ns_name opensips-prod --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR-2"
              sh "ssh Osm9-12m@20.198.121.127 sleep 10"
+             sh "ssh Osm9-12m@20.198.121.127 osm ns-list"
           }
         }
       }
