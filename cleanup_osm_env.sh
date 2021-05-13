@@ -43,6 +43,16 @@ else
    echo "Kubernetes Cluster is not present!!"
 fi
 
+var23=$(osm k8scluster-list | grep -P '(^|\s)\Kkubeadm-cluster(?=\s|$)' | awk '{print $2}');
+var24="kubeadm-cluster"
+if [ "$var23" = "$var24" ]
+then
+   echo "Kubeadm Cluster is present.Remove It!!"
+   osm k8scluster-delete kubespray-cluster
+else
+   echo "Kubeadm Cluster is not present!!"
+fi
+
 
 #Deleting Helm Repository
 var9=$(osm repo-list | grep -P '(^|\s)\Khelm-osm(?=\s|$)' | awk '{print $2}');
