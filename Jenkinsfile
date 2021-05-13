@@ -48,7 +48,7 @@ pipeline {
           sh "scp -o StrictHostKeyChecking=no -q kubeadm-config.yaml kubeadm@20.193.238.113:/home/kubeadm/"
           sh "scp -o StrictHostKeyChecking=no -q kubeadm-add.sh kubeadm@20.193.238.113:/home/kubeadm/"
           script {
-              sh "ssh Osm9-12m@20.198.121.127 ./kubeadm-add.sh"
+              sh "ssh kubeadm@20.193.238.113 ./kubeadm-add.sh"
           }
         }
       }
