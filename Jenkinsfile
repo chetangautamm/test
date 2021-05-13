@@ -172,11 +172,11 @@ pipeline {
         sshagent(['Osm9-12m']) {
           script {
              sh "ssh Osm9-12m@20.198.121.127 sleep 10"
-             sh "ssh Osm9-12m@20.198.121.127 osm ns-create --ns_name opensips --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR"
+             sh "ssh Osm9-12m@20.198.121.127 osm ns-create --ns_name opensips --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR-1"
              sh "ssh Osm9-12m@20.198.121.127 sleep 10"
-             sh "ssh Osm9-12m@20.198.121.127 osm ns-create --ns_name uas --nsd_name jenkins_uas-7_ns --vim_account OpenstackR"
+             sh "ssh Osm9-12m@20.198.121.127 osm ns-create --ns_name uas --nsd_name jenkins_uas-7_ns --vim_account OpenstackR-1"
              sh "ssh Osm9-12m@20.198.121.127 sleep 10"
-             sh "ssh Osm9-12m@20.198.121.127 osm ns-create --ns_name uac --nsd_name jenkins_uac-7_ns --vim_account OpenstackR"
+             sh "ssh Osm9-12m@20.198.121.127 osm ns-create --ns_name uac --nsd_name jenkins_uac-7_ns --vim_account OpenstackR-1"
              sh "ssh Osm9-12m@20.198.121.127 sleep 10"
           }
         }
@@ -195,29 +195,13 @@ pipeline {
       }
     }
     
-     stage('Creating nsd in OSM for Kubeadm') {
+     stage('Deploying Opensips IN Production-Kubeadm') {
       steps {
         sshagent(['Osm9-12m']) {
           script {
              sh "ssh Osm9-12m@20.198.121.127 sleep 10"
-             sh "ssh Osm9-12m@20.198.121.127 osm ns-create --ns_name opensips-prod --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR"
+             sh "ssh Osm9-12m@20.198.121.127 osm ns-create --ns_name opensips-prod --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR-2"
              sh "ssh Osm9-12m@20.198.121.127 sleep 10"
-             sh "ssh Osm9-12m@20.198.121.127 osm ns-create --ns_name uas-prod --nsd_name jenkins_uas-7_ns --vim_account OpenstackR"
-             sh "ssh Osm9-12m@20.198.121.127 sleep 10"
-             sh "ssh Osm9-12m@20.198.121.127 osm ns-create --ns_name uac-prod --nsd_name jenkins_uac-7_ns --vim_account OpenstackR"
-             sh "ssh Osm9-12m@20.198.121.127 sleep 10"
-          }
-        }
-      }
-    }
-    stage('Testing Opensips Server by SIPp on Kubeadm') {
-      steps {
-        sh "chmod +x configure-osm.sh"
-        sshagent(['kubeadm']) {
-          sh "scp -o StrictHostKeyChecking=no -q configure-osm.sh kubeadm@20.193.238.113:/home/kubeadm"
-          script {
-            sh "ssh kubeadm@20.193.238.113 sleep 120"
-            sh "ssh kubeadm@20.193.238.113 ./configure-osm.sh"
           }
         }
       }
