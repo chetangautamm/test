@@ -44,11 +44,11 @@ pipeline {
     stage('Adding Kubeadm Cluster to OSM') {
       steps {
         sh "chmod +x kubeadm-add.sh"
-        sshagent(['kubeadm']) {
-          sh "scp -o StrictHostKeyChecking=no -q kubeadm-config.yaml kubeadm@20.193.238.113:/home/kubeadm/"
-          sh "scp -o StrictHostKeyChecking=no -q kubeadm-add.sh kubeadm@20.193.238.113:/home/kubeadm/"
+        sshagent(['Osm9-12m']) {
+          sh "scp -o StrictHostKeyChecking=no -q kubeadm-config.yaml Osm9-12m@20.198.121.127:/home/Osm9-12m/"
+          sh "scp -o StrictHostKeyChecking=no -q kubeadm-add.sh Osm9-12m@20.198.121.127:/home/Osm9-12m/"
           script {
-              sh "ssh kubeadm@20.193.238.113 ./kubeadm-add.sh"
+              sh "ssh Osm9-12m@20.198.121.127 ./kubeadm-add.sh"
           }
         }
       }
