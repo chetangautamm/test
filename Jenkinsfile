@@ -18,15 +18,16 @@ pipeline {
     stage('Cleanup OSM Environment') {
       steps {
         sh "chmod +x cleanup_osm_env.sh"
-        sshagent(['Osm9-17m']) {
-          sh "scp -o StrictHostKeyChecking=no -q cleanup_osm_env.sh Osm9-17m@52.140.117.236:/home/Osm9-17m/"
+        withCredentials([sshUserPrivateKey(credentialsId: 'Osm9-17m', keyFileVariable: 'SSH_KEY_FOR_OSM', passphraseVariable: '', usernameVariable: '')]) {
+          sh "scp -o StrictHostKeyChecking=no -q cleanup_osm_env.sh Osm9-17m:/home/Osm9-17m/"
           script {
-              sh "ssh Osm9-17m@52.140.117.236 ./cleanup_osm_env.sh"
-              sh "ssh Osm9-17m@52.140.117.236 sleep 10"
-          }
-        }
-      }
-    }
+              sh ./cleanup_osm_env.sh
+              sleep 10
+             }
+           }
+         }
+       }
+     }
 
     stage('Adding Kubespray Cluster to OSM') {
       steps {
