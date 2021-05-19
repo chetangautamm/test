@@ -152,6 +152,32 @@ pipeline {
         }
       }
     }
+     stage('Cleanup Kubernetes') {
+      steps {
+        sh "chmod +x k8s-cleanup.sh"
+        sshagent(['k8suser']) {
+          sh "scp -o StrictHostKeyChecking=no -q k8s-cleanup.sh k8suser@52.172.221.4:/home/k8suser"
+          script {
+            sh "ssh k8suser@52.172.221.4 ./k8s-cleanup.sh"
+            sh "ssh k8suser@52.172.221.4 sleep 30"
+          }
+        }
+      }
+    }
+    
+     stage('Cleanup Kubeadm') {
+      steps {
+        sh "chmod +x kubeadm-cleanup.sh"
+        sshagent(['kubeadm']) {
+          sh "scp -o StrictHostKeyChecking=no -q kubeadm-cleanup.sh kubeadm@20.193.238.113:/home/kubeadm"
+          script {
+            sh "ssh kubeadm@20.193.238.113 ./kubeadm-cleanup.sh"
+            sh "ssh kubeadm@20.193.238.113 sleep 30"
+          }
+        }
+      }
+    }
+
 
     stage('Creating nsd in OSM') {
       steps {
