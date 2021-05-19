@@ -15,6 +15,7 @@ pipeline {
         git 'https://github.com/chetangautamm/test.git'
       }
     }
+    
     stage('Cleanup OSM Environment') {
       steps {
         sh "chmod +x cleanup_osm_env.sh"
@@ -27,7 +28,7 @@ pipeline {
            }
          }
        }
-     }
+     
 
     stage('Adding Kubespray Cluster to OSM') {
       steps {
