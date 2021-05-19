@@ -20,7 +20,7 @@ pipeline {
       steps {
         sh "chmod +x cleanup_osm_env.sh"
         withCredentials([sshUserPrivateKey(credentialsId: 'Osm9-17m', keyFileVariable: 'SSH_KEY_FOR_OSM', passphraseVariable: '', usernameVariable: '')]) {
-          scp cleanup_osm_env.sh 'Osm9-17m'
+          sh scp -i ${SSH_KEY_FOR_OSM} cleanup_osm_env.sh 
           script {
               sh ./cleanup_osm_env.sh
               sleep 10
