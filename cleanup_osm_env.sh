@@ -6,39 +6,42 @@ var2="opensips"
 if [ "$var1" = "$var2" ]
 then
    echo "Opensips NS Instance is present.Remove It!!"
-   osm ns-delete opensips --force
+   osm ns-delete opensips 
 else
    echo "Opensips NS Instance is not present!!"
 fi
+
+sleep 5 
 
 var3=$(osm ns-list | grep -P '(^|\s)\Kuas(?=\s|$)' | awk '{print $2}');
 var4="uas"
 if [ "$var3" = "$var4" ]
 then
    echo "UAS NS Instance is present.Remove It!!"
-   osm ns-delete uas --force
+   osm ns-delete uas 
 else
    echo "UAS NS Instance is not present!!"
 fi
- 
+
+sleep 5
 var5=$(osm ns-list | grep -P '(^|\s)\Kuac(?=\s|$)' | awk '{print $2}');
 var6="uac"
 if [ "$var5" = "$var6" ]
 then
    echo "UAC NS Instance is present.Remove It!!"
-   osm ns-delete uac --force
+   osm ns-delete uac 
 else
    echo "UAC NS Instance is not present!!"
 fi
 
-
+sleep 5
 
 var25=$(osm ns-list | grep  -P '(^|\s)\Kopensips-prod(?=\s|$)' | awk '{print $2}');
 var26="opensips-prod"
 if [ "$var25" = "$var26" ]
 then
    echo "Opensips NS Instance is present.Remove It!!"
-   osm ns-delete opensips-prod --force
+   osm ns-delete opensips-prod 
 else
    echo "Opensips NS Instance is not present!!"
 fi
@@ -48,7 +51,7 @@ var28="uas-prod"
 if [ "$var27" = "$var28" ]
 then
    echo "UAS NS Instance is present.Remove It!!"
-   osm ns-delete uas-prod --force
+   osm ns-delete uas-prod 
 else
    echo "UAS NS Instance is not present!!"
 fi
@@ -58,7 +61,7 @@ var30="uac-prod"
 if [ "$var29" = "$var30" ]
 then
    echo "UAC NS Instance is present.Remove It!!"
-   osm ns-delete uac-prod --force
+   osm ns-delete uac-prod 
 else
    echo "UAC NS Instance is not present!!"
 fi
