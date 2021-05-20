@@ -22,8 +22,7 @@ pipeline {
         sshagent(['Osm9-17m']) {
           sh "scp -o StrictHostKeyChecking=no -q cleanup_osm_env.sh Osm9-17m@52.140.117.236:/home/Osm9-17m/"
           script {
-              sh "ssh Osm9-17m@52.140.117.236 ./cleanup_osm_env.sh"
-              sh "ssh Osm9-17m@52.140.117.236 sleep 10"
+              sh "ssh Osm9-17m@52.140.117.236 ./cleanup_osm_env.sh"            
           }
         }
       }
@@ -48,8 +47,7 @@ pipeline {
         sshagent(['Osm9-17m']) {
           sh "scp -o StrictHostKeyChecking=no -q osm-k8s-validate.sh Osm9-17m@52.140.117.236:/home/Osm9-17m/"
           script {
-              sh "ssh Osm9-17m@52.140.117.236 ./osm-k8s-validate.sh"
-              sh "ssh Osm9-17m@52.140.117.236 sleep 5"
+              sh "ssh Osm9-17m@52.140.117.236 ./osm-k8s-validate.sh" 
           }
         }
       }
@@ -77,7 +75,6 @@ pipeline {
           sh "scp -o StrictHostKeyChecking=no -q kubeadm-validate.sh Osm9-17m@52.140.117.236:/home/Osm9-17m/"
           script {
               sh "ssh Osm9-17m@52.140.117.236 ./kubeadm-validate.sh"
-              sh "ssh Osm9-17m@52.140.117.236 sleep 5"
           }
         }
       }
@@ -88,10 +85,8 @@ pipeline {
       steps {
         sshagent(['Osm9-17m']) {
           script {
-             sh "ssh Osm9-17m@52.140.117.236 osm repo-add --type helm-chart  helm-osm https://chetangautamm.github.io/osm-helm/"
-             sh "ssh Osm9-17m@52.140.117.236 sleep 10"
-             sh "ssh Osm9-17m@52.140.117.236 helm repo update"
-             sh "ssh Osm9-17m@52.140.117.236 sleep 10"
+             sh "ssh Osm9-17m@52.140.117.236 osm repo-add --type helm-chart  helm-osm https://chetangautamm.github.io/osm-helm/ && sleep 10"
+             sh "ssh Osm9-17m@52.140.117.236 helm repo update && sleep 10"
           }
         }
       }
@@ -113,11 +108,8 @@ pipeline {
           sh "scp -o StrictHostKeyChecking=no -q opensips-knf.tar.gz Osm9-17m@52.140.117.236:/home/Osm9-17m/"
           sh "scp -o StrictHostKeyChecking=no -q opensips-kns.tar.gz Osm9-17m@52.140.117.236:/home/Osm9-17m/"
           script {
-             sh "ssh Osm9-17m@52.140.117.236 sleep 10"
-             sh "ssh Osm9-17m@52.140.117.236 osm nfpkg-create opensips-knf.tar.gz"
-             sh "ssh Osm9-17m@52.140.117.236 sleep 10"
-             sh "ssh Osm9-17m@52.140.117.236 osm nspkg-create opensips-kns.tar.gz"
-             sh "ssh Osm9-17m@52.140.117.236 sleep 10"
+             sh "ssh Osm9-17m@52.140.117.236 osm nfpkg-create opensips-knf.tar.gz && sleep 10"
+             sh "ssh Osm9-17m@52.140.117.236 osm nspkg-create opensips-kns.tar.gz && sleep 10"
           }
         }
       }
@@ -128,11 +120,8 @@ pipeline {
           sh "scp -o StrictHostKeyChecking=no -q uas-knf.tar.gz Osm9-17m@52.140.117.236:/home/Osm9-17m/"
           sh "scp -o StrictHostKeyChecking=no -q uas-kns.tar.gz Osm9-17m@52.140.117.236:/home/Osm9-17m/"
           script {
-             sh "ssh Osm9-17m@52.140.117.236 sleep 10"
-             sh "ssh Osm9-17m@52.140.117.236 osm nfpkg-create uas-knf.tar.gz"
-             sh "ssh Osm9-17m@52.140.117.236 sleep 10"
-             sh "ssh Osm9-17m@52.140.117.236 osm nspkg-create uas-kns.tar.gz"
-             sh "ssh Osm9-17m@52.140.117.236 sleep 10"
+             sh "ssh Osm9-17m@52.140.117.236 osm nfpkg-create uas-knf.tar.gz && sleep 10"
+             sh "ssh Osm9-17m@52.140.117.236 osm nspkg-create uas-kns.tar.gz && sleep 10"
           }
         }
       }
@@ -143,11 +132,8 @@ pipeline {
           sh "scp -o StrictHostKeyChecking=no -q uac-knf.tar.gz Osm9-17m@52.140.117.236:/home/Osm9-17m/"
           sh "scp -o StrictHostKeyChecking=no -q uac-kns.tar.gz Osm9-17m@52.140.117.236:/home/Osm9-17m/"
           script {
-             sh "ssh Osm9-17m@52.140.117.236 sleep 10"
-             sh "ssh Osm9-17m@52.140.117.236 osm nfpkg-create uac-knf.tar.gz"
-             sh "ssh Osm9-17m@52.140.117.236 sleep 10"
-             sh "ssh Osm9-17m@52.140.117.236 osm nspkg-create uac-kns.tar.gz"
-             sh "ssh Osm9-17m@52.140.117.236 sleep 10"
+             sh "ssh Osm9-17m@52.140.117.236 osm nfpkg-create uac-knf.tar.gz && sleep 10"
+             sh "ssh Osm9-17m@52.140.117.236 osm nspkg-create uac-kns.tar.gz && sleep 10"
           }
         }
       }
@@ -157,13 +143,9 @@ pipeline {
       steps {
         sshagent(['Osm9-17m']) {
           script {
-             sh "ssh Osm9-17m@52.140.117.236 sleep 10"
-             sh "ssh Osm9-17m@52.140.117.236 osm ns-create --ns_name opensips --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR-1"
-             sh "ssh Osm9-17m@52.140.117.236 sleep 10"
-             sh "ssh Osm9-17m@52.140.117.236 osm ns-create --ns_name uas --nsd_name jenkins_uas-7_ns --vim_account OpenstackR-1"
-             sh "ssh Osm9-17m@52.140.117.236 sleep 10"
-             sh "ssh Osm9-17m@52.140.117.236 osm ns-create --ns_name uac --nsd_name jenkins_uac-7_ns --vim_account OpenstackR-1"
-             sh "ssh Osm9-17m@52.140.117.236 sleep 10"
+             sh "ssh Osm9-17m@52.140.117.236 osm ns-create --ns_name opensips --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR-1 && sleep 10"
+             sh "ssh Osm9-17m@52.140.117.236 osm ns-create --ns_name uas --nsd_name jenkins_uas-7_ns --vim_account OpenstackR-1 && sleep 10"
+             sh "ssh Osm9-17m@52.140.117.236 osm ns-create --ns_name uac --nsd_name jenkins_uac-7_ns --vim_account OpenstackR-1 && sleep 10"
           }
         }
       }
@@ -174,7 +156,6 @@ pipeline {
         sshagent(['k8suser']) {
           sh "scp -o StrictHostKeyChecking=no -q configure-osm.sh k8suser@52.172.221.4:/home/k8suser"
           script {
-            sh "ssh k8suser@52.172.221.4 sleep 120"
             sh "ssh k8suser@52.172.221.4 ./configure-osm.sh"
           }
         }
@@ -184,10 +165,8 @@ pipeline {
      stage('Deploying Opensips IN Production-Kubeadm') {
       steps {
         sshagent(['Osm9-17m']) {
-          script {
-             sleep 10
-             sh "ssh Osm9-17m@52.140.117.236 osm ns-create --ns_name opensips-prod --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR-2"
-             sleep 10
+          script { 
+             sh "ssh Osm9-17m@52.140.117.236 osm ns-create --ns_name opensips-prod --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR-2 && sleep 10"
              sh "ssh Osm9-17m@52.140.117.236 osm ns-list"
           }
         }

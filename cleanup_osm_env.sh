@@ -173,4 +173,4 @@ osm repo-list
 osm nsd-list
 osm vnfd-list
 
- 
+sleep 10

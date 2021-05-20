@@ -9,3 +9,5 @@ then
 else
    echo "Kubeadm Cluster is not Added!!"
 fi
+
+sleep 5

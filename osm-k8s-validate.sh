@@ -9,3 +9,5 @@ then
 else
    echo "Kubernetes Cluster is not Added!!"
 fi
+
+sleep 5

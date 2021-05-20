@@ -1,4 +1,6 @@
 #!/bin/bash
+
+sleep 120
 #capture required data
 namespace=$(kubectl get ns | awk 'NR==2{print $1}');
 opensips_server=$(kubectl get pods -n $namespace -o wide | grep opensips | awk '{print $1}');
