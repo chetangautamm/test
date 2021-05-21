@@ -23,15 +23,15 @@ pipeline {
           sh "scp -o StrictHostKeyChecking=no -q cleanup_osm_env.sh osm-9@20.198.70.83:/home/osm-9/"
           script {
                try {
-                 sh "ssh osm-9@20.198.70.83 ./cleanup_osm_env.sh"
+                   sh 'ssh osm-9@20.198.70.83 ./cleanup_osm_env.sh'
                } catch (err) {
                    echo "Caught: ${err}"
                    currentBuild.result = 'FAILURE'
-             }                   
-          }
-        }
-      }
-    }    
+               }                   
+             }
+           }
+         }
+       }    
 
     stage('Adding Kubespray Cluster to OSM') {
       when {
