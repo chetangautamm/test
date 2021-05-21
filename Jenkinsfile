@@ -29,6 +29,11 @@ pipeline {
     }    
 
     stage('Adding Kubespray Cluster to OSM') {
+      when {
+        expression {
+             currentBuild.result == null || currentBuild.result == 'SUCCESS' 
+        }
+      }
       steps {
         sh "chmod +x osm-k8s-add.sh"
         sshagent(['osm-9']) {
