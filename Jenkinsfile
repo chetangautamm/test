@@ -22,7 +22,12 @@ pipeline {
         sshagent(['osm-9']) {
           sh "scp -o StrictHostKeyChecking=no -q cleanup_osm_env.sh osm-9@20.198.70.83:/home/osm-9/"
           script {
-              sh "ssh osm-9@20.198.70.83 ./cleanup_osm_env.sh"            
+               try {
+                 sh "ssh osm-9@20.198.70.83 ./cleanup_osm_env.sh"
+               } catch (err) {
+                   echo "Caught: ${err}"
+                   currentBuild.result = 'FAILURE'
+             }                   
           }
         }
       }
