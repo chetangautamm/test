@@ -46,27 +46,6 @@ else
    echo "Opensips NS Instance is not present!!"
 fi
 
-var27=$(osm ns-list | grep -P '(^|\s)\Kuas-prod(?=\s|$)' | awk '{print $2}');
-var28="uas-prod"
-if [ "$var27" = "$var28" ]
-then
-   echo "UAS NS Instance is present.Remove It!!"
-   osm ns-delete uas-prod 
-else
-   echo "UAS NS Instance is not present!!"
-fi
-
-var29=$(osm ns-list | grep -P '(^|\s)\Kuac-prod(?=\s|$)' | awk '{print $2}');
-var30="uac-prod"
-if [ "$var29" = "$var30" ]
-then
-   echo "UAC NS Instance is present.Remove It!!"
-   osm ns-delete uac-prod 
-else
-   echo "UAC NS Instance is not present!!"
-fi
-
-
 
 #Deleting Kubernetes Cluster
 var7=$(osm k8scluster-list | grep -P '(^|\s)\Kkubespray-cluster(?=\s|$)' | awk '{print $2}');
