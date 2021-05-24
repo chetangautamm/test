@@ -46,42 +46,6 @@ else
    echo "Opensips NS Instance is not present!!"
 fi
 
-
-#Deleting Kubernetes Cluster
-var7=$(osm k8scluster-list | grep -P '(^|\s)\Kkubespray-cluster(?=\s|$)' | awk '{print $2}');
-var8="kubespray-cluster"
-if [ "$var7" = "$var8" ]
-then
-   echo "Kubernetes Cluster is present.Remove It!!"
-   osm k8scluster-delete kubespray-cluster
-else
-   echo "Kubernetes Cluster is not present!!"
-fi
-
-var23=$(osm k8scluster-list | grep -P '(^|\s)\Kkubeadm-cluster(?=\s|$)' | awk '{print $2}');
-var24="kubeadm-cluster"
-if [ "$var23" = "$var24" ]
-then
-   echo "Kubeadm Cluster is present.Remove It!!"
-   osm k8scluster-delete kubeadm-cluster
-else
-   echo "Kubeadm Cluster is not present!!"
-fi
-
-
-#Deleting Helm Repository
-var9=$(osm repo-list | grep -P '(^|\s)\Khelm-osm(?=\s|$)' | awk '{print $2}');
-var10="helm-osm"
-if [ "$var9" = "$var10" ]
-then
-   echo "Helm Repository is present.Remove It!!"
-   osm repo-delete helm-osm
-else
-   echo "Helm Repository is not present!!"
-fi
-
-sleep 5
-
 #Deleting NSD of Jenkins
 var17=$(osm nsd-list | grep -P '(^|\s)\Kjenkins_opensips-7_ns(?=\s|$)' | awk '{print $2}');
 var18="jenkins_opensips-7_ns"
@@ -144,6 +108,42 @@ then
 else
    echo "UAC VNFD is not present!!"
 fi
+
+#Deleting Kubernetes Cluster
+var7=$(osm k8scluster-list | grep -P '(^|\s)\Kkubespray-cluster(?=\s|$)' | awk '{print $2}');
+var8="kubespray-cluster"
+if [ "$var7" = "$var8" ]
+then
+   echo "Kubernetes Cluster is present.Remove It!!"
+   osm k8scluster-delete kubespray-cluster
+else
+   echo "Kubernetes Cluster is not present!!"
+fi
+
+var23=$(osm k8scluster-list | grep -P '(^|\s)\Kkubeadm-cluster(?=\s|$)' | awk '{print $2}');
+var24="kubeadm-cluster"
+if [ "$var23" = "$var24" ]
+then
+   echo "Kubeadm Cluster is present.Remove It!!"
+   osm k8scluster-delete kubeadm-cluster
+else
+   echo "Kubeadm Cluster is not present!!"
+fi
+
+
+#Deleting Helm Repository
+var9=$(osm repo-list | grep -P '(^|\s)\Khelm-osm(?=\s|$)' | awk '{print $2}');
+var10="helm-osm"
+if [ "$var9" = "$var10" ]
+then
+   echo "Helm Repository is present.Remove It!!"
+   osm repo-delete helm-osm
+else
+   echo "Helm Repository is not present!!"
+fi
+
+sleep 5
+
 
 #Verifying Deletion of services
 osm ns-list
