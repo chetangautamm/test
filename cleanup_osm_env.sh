@@ -40,12 +40,12 @@ var25=$(osm ns-list | grep  -P '(^|\s)\Kopensips-prod(?=\s|$)' | awk '{print $2}
 var26="opensips-prod"
 if [ "$var25" = "$var26" ]
 then
-   echo "Opensips NS Instance is present.Remove It!!"
+   echo "Opensips-Prod NS Instance is present.Remove It!!"
    osm ns-delete opensips-prod 
 else
-   echo "Opensips NS Instance is not present!!"
+   echo "Opensips-Prod NS Instance is not present!!"
 fi
-sleep 5
+sleep 10
 #Deleting NSD of Jenkins
 var17=$(osm nsd-list | grep -P '(^|\s)\Kjenkins_opensips-7_ns(?=\s|$)' | awk '{print $2}');
 var18="jenkins_opensips-7_ns"
