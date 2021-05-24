@@ -45,7 +45,7 @@ then
 else
    echo "Opensips NS Instance is not present!!"
 fi
-
+sleep 5
 #Deleting NSD of Jenkins
 var17=$(osm nsd-list | grep -P '(^|\s)\Kjenkins_opensips-7_ns(?=\s|$)' | awk '{print $2}');
 var18="jenkins_opensips-7_ns"
