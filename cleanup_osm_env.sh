@@ -74,7 +74,7 @@ var10="helm-osm"
 if [ "$var9" = "$var10" ]
 then
    echo "Helm Repository is present.Remove It!!"
-   osm repo-delete helm-osm
+   osm repo-delete helm-osm --force
 else
    echo "Helm Repository is not present!!"
 fi
