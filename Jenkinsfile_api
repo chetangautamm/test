@@ -43,7 +43,7 @@ pipeline {
     stage('Cleanup osm env') {
       steps {
           script {
-             sh "python3 cleanup_osm.py"
+             sh "echo Deployed"
           }
         }
       }
