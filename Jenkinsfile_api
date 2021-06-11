@@ -1,0 +1,51 @@
+pipeline {
+
+  environment {
+    registry = "chetangautamm/repo"
+    registryCredential = '58881f31-29bb-48a8-9da9-fc254654146d' 
+    dockerImage = ""
+  }
+
+  agent any
+
+  stages {
+
+    stage('Checkout Source Code') {
+      steps {
+        git 'https://github.com/chetangautamm/test.git'
+      }
+    }
+    
+    stage('Uploading Opensips') {
+      steps {
+          script {
+             sh "python3 opensips.py"
+          }
+        }
+      }
+
+    stage('Uploading Uas') {
+      steps {
+          script {
+             sh "python3 uas.py"
+          }
+        }
+      }
+     
+    stage('Uploading Uac') {
+      steps {
+          script {
+             sh "python3 uac.py"
+          }
+        }
+      }
+ 
+    stage('Cleanup osm env') {
+      steps {
+          script {
+             sh "python3 cleanup_osm.py"
+          }
+        }
+      }
+    }
+  }
