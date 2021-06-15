@@ -56,9 +56,21 @@ def get_uac_ns_id(url, token):
     for uac in data:
         if uac['name'] == "uac":
             return uac['_id']
+        
+def get_opensips_prod_id(url, token):
+    headers = { 'Authorization': f'Bearer {token}', 'Accept': 'application/json' }
+    response = requests.request("GET", url, headers=headers, verify=False)
+    data = response.json()
+    for opensips in data:
+        if opensips['name'] == "opensips-prod":
+            return opensips['_id'] 
+
 
 opensipsId = get_opensips_ns_id(url+f"/nslcm/v1/ns_instances_content", token)
 print(f"opensipsId: {opensipsId}")
+
+opensipsProd = get_opensips_prod_id(url+f"/nslcm/v1/ns_instances_content", token)
+print(f"opensipsProd: {opensipsProd}")
 
 uasId = get_uas_ns_id(url+f"/nslcm/v1/ns_instances_content", token)
 print(f"uasId: {uasId}")
@@ -92,7 +104,7 @@ def delete_uac_ns_instance(token, url):
         print("NS instance resource deleted successfully.")
 delete_uac_ns_instance(token, url+f"/nslcm/v1/ns_instances_content/{uacId}")
 
-time.sleep(30)
+time.sleep(15)
 
 
 # In[15]:
@@ -157,6 +169,8 @@ def delete_uac_nsd(token, url):
     if response.status_code == 204:
         print("Uac nsd deleted successfully.")
 delete_uac_nsd(token, url+f"/nsd/v1/ns_descriptors/{uacNsdId}")
+
+time.sleep(10)
 
 
 # In[17]:
@@ -224,9 +238,33 @@ def delete_uac_vnfd(token, url):
         print("Uac vnfd deleted successfully.")
 delete_uac_vnfd(token, url+f"/vnfpkgm/v1/vnf_packages/{uacVnfdId}")
 
+time.sleep(10)
+
 
 # In[ ]:
 
 
+#Helm Repo Id Get
+def get_helm_repo(url, token):
+    headers = { 'Authorization': f'Bearer {token}', 'Accept': 'application/json' }
+    response = requests.request("GET", url, headers=headers, verify=False)
+    data = response.json()
+    for helm in data:
+        if helm['name'] == "helm-osm":
+            return helm['_id']   
 
+helmId = get_helm_repo(url+f"/admin/v1/k8srepos", token)
+
+
+# In[ ]:
+
+
+#Delete Helm Repo
+def delete_helm_repo(token, url):
+    headers = { 'Authorization': f'Bearer {token}', 'Accept': 'application/json' }
+    response = requests.request("DELETE", url, headers=headers, verify=False )
+    if response.status_code == 204:
+        print("Helm Repo deleted successfully.")
+        
+delete_helm_repo(token, url+f"/admin/v1/k8srepos/{helmId}")
 

@@ -4,6 +4,9 @@ pipeline {
     registry = "chetangautamm/repo"
     registryCredential = '58881f31-29bb-48a8-9da9-fc254654146d' 
     dockerImage = ""
+
+    K8S_HOSTNAME = "52.172.221.4"
+    K8S_USERNAME = "k8suser"
   }
 
   agent any
@@ -15,6 +18,15 @@ pipeline {
         git 'https://github.com/chetangautamm/test.git'
       }
     }
+
+    stage('Add & Validate Helm Repo') {
+      steps {
+          script {
+             sh "python3 helm-repo_add.py"
+          }
+        }
+      }
+
     
     stage('Uploading Opensips') {
       steps {
@@ -36,14 +48,38 @@ pipeline {
       steps {
           script {
              sh "python3 uac.py"
+	     sh "sleep 15"
           }
         }
       }
+   
+     stage('Testing Opensips Server by SIPp') {
+      steps {
+        sh "chmod +x configure-osm.sh"
+        sshagent(['k8suser']) {
+          sh "scp -o StrictHostKeyChecking=no -q configure-osm.sh $K8S_USERNAME@$K8S_HOSTNAME:/home/k8suser"
+          script {
+            sh "ssh $K8S_USERNAME@$K8S_HOSTNAME ./configure-osm.sh"
+          }
+        }
+      }
+    }
+
+     stage('Uploading Opensips In Production') {
+      steps {
+          script {
+             sh "sleep 5"
+             sh "python3 kubeadm_deploy.py"
+             sh "sleep 30"
+          }
+        }
+      }
+
  
     stage('Cleanup osm env') {
       steps {
           script {
-             sh "echo Deployed"
+             sh "python3 cleanup_osm.py"
           }
         }
       }
