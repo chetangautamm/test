@@ -23,6 +23,7 @@ pipeline {
       steps {
           script {
              sh "python3 helm-repo_add.py"
+             sh "sleep 10"
           }
         }
       }
@@ -32,6 +33,7 @@ pipeline {
       steps {
           script {
              sh "python3 opensips.py"
+             sh "sleep 5"
           }
         }
       }
@@ -40,6 +42,7 @@ pipeline {
       steps {
           script {
              sh "python3 uas.py"
+             sh "sleep 5"
           }
         }
       }
