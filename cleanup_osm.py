@@ -109,7 +109,7 @@ def delete_opensips_prod_instance(token, url):
     response = requests.request("DELETE", url, headers=headers, verify=False )
     if response.status_code == 204:
         print("Opensips prod NS instance deleted successfully.")
-delete_opensips_ns_instance(token, url+f"/nslcm/v1/ns_instances_content/{opensipsId}")
+delete_opensips_ns_instance(token, url+f"/nslcm/v1/ns_instances_content/{opensipsProd}")
 
 time.sleep(15)
 
