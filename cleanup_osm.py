@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[12]:
+# In[1]:
 
 
 import requests
@@ -29,7 +29,7 @@ print(f"token: {token}")
 urllib3.disable_warnings()
 
 
-# In[13]:
+# In[2]:
 
 
 #Fetching NS Instance Ids
@@ -79,7 +79,7 @@ uacId = get_uac_ns_id(url+f"/nslcm/v1/ns_instances_content", token)
 print(f"uacId: {uacId}")
 
 
-# In[14]:
+# In[3]:
 
 
 #Deleting NS Instances
@@ -87,27 +87,34 @@ def delete_opensips_ns_instance(token, url):
     headers = { 'Authorization': f'Bearer {token}', 'Accept': 'application/json' }
     response = requests.request("DELETE", url, headers=headers, verify=False )
     if response.status_code == 204:
-        print("NS instance resource deleted successfully.")
+        print("Opensips NS instance deleted successfully.")
 delete_opensips_ns_instance(token, url+f"/nslcm/v1/ns_instances_content/{opensipsId}")
 
 def delete_uas_ns_instance(token, url):
     headers = { 'Authorization': f'Bearer {token}', 'Accept': 'application/json' }
     response = requests.request("DELETE", url, headers=headers, verify=False )
     if response.status_code == 204:
-        print("NS instance resource deleted successfully.")
+        print("Uas NS instance deleted successfully.")
 delete_uas_ns_instance(token, url+f"/nslcm/v1/ns_instances_content/{uasId}")
 
 def delete_uac_ns_instance(token, url):
     headers = { 'Authorization': f'Bearer {token}', 'Accept': 'application/json' }
     response = requests.request("DELETE", url, headers=headers, verify=False )
     if response.status_code == 204:
-        print("NS instance resource deleted successfully.")
+        print("Uac NS instance deleted successfully.")
 delete_uac_ns_instance(token, url+f"/nslcm/v1/ns_instances_content/{uacId}")
+
+def delete_opensips_prod_instance(token, url):
+    headers = { 'Authorization': f'Bearer {token}', 'Accept': 'application/json' }
+    response = requests.request("DELETE", url, headers=headers, verify=False )
+    if response.status_code == 204:
+        print("Opensips prod NS instance deleted successfully.")
+delete_opensips_ns_instance(token, url+f"/nslcm/v1/ns_instances_content/{opensipsId}")
 
 time.sleep(15)
 
 
-# In[15]:
+# In[4]:
 
 
 #NSD List
@@ -145,7 +152,7 @@ uacNsdId = get_uac_nsd(url+f"/nsd/v1/ns_descriptors", token)
 print(f"uacNsdId: {uacNsdId}")
 
 
-# In[16]:
+# In[5]:
 
 
 #Deleting nsd
@@ -173,7 +180,7 @@ delete_uac_nsd(token, url+f"/nsd/v1/ns_descriptors/{uacNsdId}")
 time.sleep(10)
 
 
-# In[17]:
+# In[6]:
 
 
 #VNFD List
@@ -213,7 +220,7 @@ uacVnfdId = get_uac_vnfd(url+f"/vnfpkgm/v1/vnf_packages", token)
 print(f"uacVnfdId: {uacVnfdId}")
 
 
-# In[18]:
+# In[7]:
 
 
 #Deleting vnfd
@@ -241,7 +248,7 @@ delete_uac_vnfd(token, url+f"/vnfpkgm/v1/vnf_packages/{uacVnfdId}")
 time.sleep(10)
 
 
-# In[ ]:
+# In[8]:
 
 
 #Helm Repo Id Get
@@ -256,7 +263,7 @@ def get_helm_repo(url, token):
 helmId = get_helm_repo(url+f"/admin/v1/k8srepos", token)
 
 
-# In[ ]:
+# In[9]:
 
 
 #Delete Helm Repo
