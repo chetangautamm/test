@@ -36,7 +36,7 @@ def helm_repo_add(url, token):
     headers = { 'Authorization': f'Bearer {token}', 'Accept': 'application/json', 'Content-Type': 'application/json' }
     payload = json.dumps({"name": "helm-osm","description": "Helm Repo for Opensips & Sipp","type": "helm-chart","url": "https://chetangautamm.github.io/osm-helm/"})
     response = requests.request("POST", url, headers=headers, data=payload, verify=False)
-    return response.json()['id']
+    return response.json()
 
 helm_repo_add(url+"/admin/v1/k8srepos",token)
 
