@@ -13,7 +13,7 @@ import time
 import urllib3
 
 #Token Generation
-url = "https://20.204.38.93:9999/osm"
+url = "https://20.204.139.200:9999/osm"
 def get_token(url):
     payload = json.dumps({ "username": "admin", "password": "admin", "project_id": "admin" })
     headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' }
