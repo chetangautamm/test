@@ -25,7 +25,7 @@ pipeline {
     stage('Cleanup OSM Environment') {
       steps {
         sh "chmod +x cleanup_osm_env.sh"
-        sshagent(['osm-9']) {
+        sshagent(['osm-10']) {
           sh "scp -o StrictHostKeyChecking=no -q cleanup_osm_env.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
           script {
               sh 'ssh $OSM_USERNAME@$OSM_HOSTNAME ./cleanup_osm_env.sh'
@@ -37,7 +37,7 @@ pipeline {
     stage('Adding Kubespray Cluster to OSM') {
       steps {
         sh "chmod +x osm-k8s-add.sh"
-        sshagent(['osm-9']) {
+        sshagent(['osm-10']) {
           sh "scp -o StrictHostKeyChecking=no -q kubespray-config.yaml $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
           sh "scp -o StrictHostKeyChecking=no -q osm-k8s-add.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
           script {
@@ -50,7 +50,7 @@ pipeline {
     stage('Validating Kubespray Cluster Addition') {
       steps {
         sh "chmod +x osm-k8s-validate.sh"        
-        sshagent(['osm-9']) {
+        sshagent(['osm-10']) {
           sh "scp -o StrictHostKeyChecking=no -q osm-k8s-validate.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
           script {
               sh "ssh $OSM_USERNAME@$OSM_HOSTNAME ./osm-k8s-validate.sh" 
@@ -63,7 +63,7 @@ pipeline {
     stage('Adding Kubeadm Cluster to OSM') {
       steps {
         sh "chmod +x kubeadm-add.sh"
-        sshagent(['osm-9']) {
+        sshagent(['osm-10']) {
           sh "scp -o StrictHostKeyChecking=no -q kubeadm-config.yaml $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
           sh "scp -o StrictHostKeyChecking=no -q kubeadm-add.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
           script {
@@ -77,7 +77,7 @@ pipeline {
     stage('Validating Kubeadm Cluster Addition') {
       steps {
         sh "chmod +x kubeadm-validate.sh"
-        sshagent(['osm-9']) {
+        sshagent(['osm-10']) {
           sh "scp -o StrictHostKeyChecking=no -q kubeadm-validate.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
           script {
               sh "ssh $OSM_USERNAME@$OSM_HOSTNAME ./kubeadm-validate.sh"
@@ -89,7 +89,7 @@ pipeline {
     
     stage('Adding Helm Repository to OSM') {
       steps {
-        sshagent(['osm-9']) {
+        sshagent(['osm-10']) {
           script {
              sh "ssh $OSM_USERNAME@$OSM_HOSTNAME osm repo-add --type helm-chart  helm-osm https://chetangautamm.github.io/osm-helm/ && sleep 10"
              sh "ssh $OSM_USERNAME@$OSM_HOSTNAME helm repo update && sleep 10"
@@ -100,7 +100,7 @@ pipeline {
     stage('Validating Helm Repo Addition') {
       steps {
         sh "chmod +x osm-helm-validate.sh"
-        sshagent(['osm-9']) {
+        sshagent(['osm-10']) {
           sh "scp -o StrictHostKeyChecking=no -q osm-helm-validate.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
           script {
               sh "ssh $OSM_USERNAME@$OSM_HOSTNAME ./osm-helm-validate.sh"
@@ -110,7 +110,7 @@ pipeline {
     }
     stage('Creating nfpkg & nspkg in OSM for Opensips') {
       steps {
-        sshagent(['osm-9']) {
+        sshagent(['osm-10']) {
           sh "scp -o StrictHostKeyChecking=no -q opensips-knf.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
           sh "scp -o StrictHostKeyChecking=no -q opensips-kns.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
           script {
@@ -122,7 +122,7 @@ pipeline {
     }
      stage('Creating nfpkg & nspkg in OSM for UAS') {
       steps {
-        sshagent(['osm-9']) {
+        sshagent(['osm-10']) {
           sh "scp -o StrictHostKeyChecking=no -q uas-knf.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
           sh "scp -o StrictHostKeyChecking=no -q uas-kns.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
           script {
@@ -134,7 +134,7 @@ pipeline {
     }
     stage('Creating nfpkg & nspkg in OSM for UAC') {
       steps {
-        sshagent(['osm-9']) {
+        sshagent(['osm-10']) {
           sh "scp -o StrictHostKeyChecking=no -q uac-knf.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
           sh "scp -o StrictHostKeyChecking=no -q uac-kns.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
           script {
@@ -147,7 +147,7 @@ pipeline {
 
     stage('Creating nsd in OSM') {
       steps {
-        sshagent(['osm-9']) {
+        sshagent(['osm-10']) {
           script {
              sh "ssh $OSM_USERNAME@$OSM_HOSTNAME osm ns-create --ns_name opensips --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR-1 && sleep 10"
              sh "ssh $OSM_USERNAME@$OSM_HOSTNAME osm ns-create --ns_name uas --nsd_name jenkins_uas-7_ns --vim_account OpenstackR-1 && sleep 10"
@@ -170,7 +170,7 @@ pipeline {
     
      stage('Deploying Opensips IN Production-Kubeadm') {
       steps {
-        sshagent(['osm-9']) {
+        sshagent(['osm-10']) {
           script { 
              sh "ssh $OSM_USERNAME@$OSM_HOSTNAME osm ns-create --ns_name opensips-prod --nsd_name jenkins_opensips-7_ns --vim_account OpenstackR-2 && sleep 10"
              sh "ssh $OSM_USERNAME@$OSM_HOSTNAME osm ns-list"
