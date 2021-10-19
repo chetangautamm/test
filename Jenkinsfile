@@ -26,7 +26,7 @@ pipeline {
       steps {
         sh "chmod +x cleanup_osm_env.sh"
         sshagent(['osm-10']) {
-          sh "scp -o StrictHostKeyChecking=no -q cleanup_osm_env.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8"
+          sh "scp -o StrictHostKeyChecking=no -q cleanup_osm_env.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8/"
           script {
               sh 'ssh $OSM_USERNAME@$OSM_HOSTNAME ./cleanup_osm_env.sh'
                }                   
