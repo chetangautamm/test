@@ -5,8 +5,8 @@ pipeline {
     registryCredential = '58881f31-29bb-48a8-9da9-fc254654146d' 
     dockerImage = ""
 
-    OSM_HOSTNAME = "20.204.139.200"
-    OSM_USERNAME = "osm-9"
+    OSM_HOSTNAME = "20.204.6.188"
+    OSM_USERNAME = "osm-8"
 
     K8S_HOSTNAME = "52.172.221.4"
     K8S_USERNAME = "k8suser"
