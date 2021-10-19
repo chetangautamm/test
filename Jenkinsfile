@@ -26,7 +26,7 @@ pipeline {
       steps {
         sh "chmod +x cleanup_osm_env.sh"
         sshagent(['osm-10']) {
-          sh "scp -o StrictHostKeyChecking=no -q cleanup_osm_env.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q cleanup_osm_env.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8/"
           script {
               sh 'ssh $OSM_USERNAME@$OSM_HOSTNAME ./cleanup_osm_env.sh'
                }                   
@@ -38,8 +38,8 @@ pipeline {
       steps {
         sh "chmod +x osm-k8s-add.sh"
         sshagent(['osm-10']) {
-          sh "scp -o StrictHostKeyChecking=no -q kubespray-config.yaml $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
-          sh "scp -o StrictHostKeyChecking=no -q osm-k8s-add.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q kubespray-config.yaml $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8/"
+          sh "scp -o StrictHostKeyChecking=no -q osm-k8s-add.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8/"
           script {
               sh "ssh $OSM_USERNAME@$OSM_HOSTNAME ./osm-k8s-add.sh"
           }
@@ -51,7 +51,7 @@ pipeline {
       steps {
         sh "chmod +x osm-k8s-validate.sh"        
         sshagent(['osm-10']) {
-          sh "scp -o StrictHostKeyChecking=no -q osm-k8s-validate.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q osm-k8s-validate.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8/"
           script {
               sh "ssh $OSM_USERNAME@$OSM_HOSTNAME ./osm-k8s-validate.sh" 
           }
@@ -64,8 +64,8 @@ pipeline {
       steps {
         sh "chmod +x kubeadm-add.sh"
         sshagent(['osm-10']) {
-          sh "scp -o StrictHostKeyChecking=no -q kubeadm-config.yaml $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
-          sh "scp -o StrictHostKeyChecking=no -q kubeadm-add.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q kubeadm-config.yaml $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8/"
+          sh "scp -o StrictHostKeyChecking=no -q kubeadm-add.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8/"
           script {
               sh "ssh $OSM_USERNAME@$OSM_HOSTNAME ./kubeadm-add.sh"
           }
@@ -78,7 +78,7 @@ pipeline {
       steps {
         sh "chmod +x kubeadm-validate.sh"
         sshagent(['osm-10']) {
-          sh "scp -o StrictHostKeyChecking=no -q kubeadm-validate.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q kubeadm-validate.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8/"
           script {
               sh "ssh $OSM_USERNAME@$OSM_HOSTNAME ./kubeadm-validate.sh"
           }
@@ -101,7 +101,7 @@ pipeline {
       steps {
         sh "chmod +x osm-helm-validate.sh"
         sshagent(['osm-10']) {
-          sh "scp -o StrictHostKeyChecking=no -q osm-helm-validate.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q osm-helm-validate.sh $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8/"
           script {
               sh "ssh $OSM_USERNAME@$OSM_HOSTNAME ./osm-helm-validate.sh"
           }
@@ -111,8 +111,8 @@ pipeline {
     stage('Creating nfpkg & nspkg in OSM for Opensips') {
       steps {
         sshagent(['osm-10']) {
-          sh "scp -o StrictHostKeyChecking=no -q opensips-knf.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
-          sh "scp -o StrictHostKeyChecking=no -q opensips-kns.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q opensips-knf.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8/"
+          sh "scp -o StrictHostKeyChecking=no -q opensips-kns.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8/"
           script {
              sh "ssh $OSM_USERNAME@$OSM_HOSTNAME osm nfpkg-create opensips-knf.tar.gz && sleep 10"
              sh "ssh $OSM_USERNAME@$OSM_HOSTNAME osm nspkg-create opensips-kns.tar.gz && sleep 10"
@@ -123,8 +123,8 @@ pipeline {
      stage('Creating nfpkg & nspkg in OSM for UAS') {
       steps {
         sshagent(['osm-10']) {
-          sh "scp -o StrictHostKeyChecking=no -q uas-knf.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
-          sh "scp -o StrictHostKeyChecking=no -q uas-kns.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q uas-knf.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8/"
+          sh "scp -o StrictHostKeyChecking=no -q uas-kns.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8/"
           script {
              sh "ssh $OSM_USERNAME@$OSM_HOSTNAME osm nfpkg-create uas-knf.tar.gz && sleep 10"
              sh "ssh $OSM_USERNAME@$OSM_HOSTNAME osm nspkg-create uas-kns.tar.gz && sleep 10"
@@ -135,8 +135,8 @@ pipeline {
     stage('Creating nfpkg & nspkg in OSM for UAC') {
       steps {
         sshagent(['osm-10']) {
-          sh "scp -o StrictHostKeyChecking=no -q uac-knf.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
-          sh "scp -o StrictHostKeyChecking=no -q uac-kns.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-9/"
+          sh "scp -o StrictHostKeyChecking=no -q uac-knf.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8/"
+          sh "scp -o StrictHostKeyChecking=no -q uac-kns.tar.gz $OSM_USERNAME@$OSM_HOSTNAME:/home/osm-8/"
           script {
              sh "ssh $OSM_USERNAME@$OSM_HOSTNAME osm nfpkg-create uac-knf.tar.gz && sleep 10"
              sh "ssh $OSM_USERNAME@$OSM_HOSTNAME osm nspkg-create uac-kns.tar.gz && sleep 10"
